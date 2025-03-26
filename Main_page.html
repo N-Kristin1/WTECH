@@ -6,11 +6,13 @@
     <title>Aura Attire</title>
     <style>
         body {
+            overflow-x: hidden;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #C3D8C5;
         }
+
         .header {
             background-color: #1D1D1B;
             color: white;
@@ -19,111 +21,320 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            filter: invert(1);
+            height: 30px;
+            width: 30px;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-icons img {
+            filter: invert(1);
+            height: 30px;
+            width: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            background-color: #A3BDA5;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .nav-links a {
+            color: black;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-links a:hover {
+            background-color: #6B8F71;
+        }
+
+        .search-bar {
+            background-color: #A3BDA5;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            width: 200px;
+        }
+
         .header a {
             color: white;
             text-decoration: none;
             margin: 0 10px;
             font-weight: bold;
         }
+
         .logo img {
             height: 80px;
         }
+
         .search-bar {
             padding: 20px;
         }
+
         .main-title {
             text-align: center;
-            font-size: 36px;
+            font-size: 60px;
             font-weight: bold;
-            padding: 10px;
+            font-family: 'Poppins', sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            text-transform: uppercase;
+            color: #1D1D1B;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
         }
+
         .collection {
             text-align: center;
+            font-size: 30px;
             font-weight: bold;
-            font-size: 24px;
-            padding: 10px;
+            font-family: 'Poppins', sans-serif;
+            padding: 15px;
+            color: black;
+            border-radius: 10px;
+            display: inline-block;
+            width: auto;
+            margin: 20px auto;
+            text-transform: uppercase;
         }
-        .image-banner {
+
+        .image-banner img {
             width: 100%;
-            height: 200px;
-            background-color: #6B8E68;
+            height: 600px;
+            object-fit: cover;
         }
+
         .newest-collection {
             display: flex;
             justify-content: space-between;
             padding: 10px;
         }
-        .newest-collection .image-placeholder {
+
+        .newest-collection img {
             width: 70%;
-            height: 200px;
-            background-color: #88A988;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
         }
+
         .advertisement {
-            background-color: #333;
-            color: yellow;
-            font-weight: bold;
+            width: 30%;
+            height: 500px;
+            background-image: url('images/ad-banner.jpg');
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 30%;
-            height: 200px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+
+        .advertisement::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+        }
+
+        .ad-content {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .ad-content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .ad-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .shop-now {
+            display: inline-block;
+            background-color: #FFD700;
+            color: black;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .shop-now:hover {
+            background-color: #FFC300;
+            transform: scale(1.1);
+        }
+
+        .ad-banner {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .ad-banner img {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .products-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 100%;
+            padding-bottom: 10px;
+        }
+
         .products {
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            gap: 20px;
             padding: 10px;
         }
-        .product-box {
-            width: 30%;
-            height: 100px;
-            background-color: lightgray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .products::-webkit-scrollbar {
+            height: 8px;
         }
+
+        .products::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .products::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .product-pic {
+            width: 250px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .product-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .footer {
             background-color: #A3BDA5;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons img:hover {
+            transform: scale(1.2);
+        }
+
+        .footer-text {
             text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo"><img src="images/logo.png" alt="Aura Attire Logo"></div>
-        <div>
-            <a href="#">Women</a>
-            <a href="#">Men</a>
-            <a href="#">Kids</a>
+        <div class="header-left">
+            <div class="logo"><img src="images/logo.png" alt="Aura Attire Logo"></div>
+            <img src="images/cart.png" alt="Cart Icon" class="cart-icon">
+            <div class="nav-links">
+                <a href="#">Women</a>
+                <a href="#">Men</a>
+                <a href="#">Kids</a>
+            </div>
         </div>
-        <div>
+        <div class="header-icons">
             <input class="search-bar" type="text" placeholder="Search">
+            <img src="images/search.png" alt="Search Icon">
+            <img src="images/user.png" alt="User Icon">
+        </div>
+    </div>
+    <div class="main-title">Aura Attire</div>
+    <div class="image-banner">
+        <img src="images/img1.jpg" alt="Banner Image">
+    </div>
+    <div class="collection">Newest Collection</div>
+    <div class="newest-collection">
+        <img src="images/img2.jpg" alt="Newest Collection">
+        <div class="advertisement">
+            <div class="ad-content">
+                <h2>Spring Collection 2025</h2>
+                <p>Exclusive styles now available. Refresh your wardrobe with our latest designs.</p>
+                <a href="#" class="shop-now">Shop Now</a>
+            </div>
         </div>
     </div>
     
-    <div class="main-title">Aura Attire</div>
-    
-    <div class="image-banner"></div>
-    
-    <div class="collection">Newest Collection</div>
-    
-    <div class="newest-collection">
-        <div class="image-placeholder"></div>
-        <div class="advertisement">Reklamný banner</div>
+    <div class="ad-banner">
+        <img src="images/ad.png" alt="Advertisement">
     </div>
-    
     <div class="collection">For you</div>
-    
-    <div class="products">
-        <div class="product-box">Product</div>
-        <div class="product-box">Product</div>
-        <div class="product-box">Product</div>
+    <div class="products-container">
+        <div class="products">
+            <div class="product-pic"><img src="images/greenshirt.webp" alt="Product 1"></div>
+            <div class="product-pic"><img src="images/jeans.webp" alt="Product 2"></div>
+            <div class="product-pic"><img src="images/leatherjacket.jpg" alt="Product 3"></div>
+            <div class="product-pic"><img src="images/whiteshirt.webp" alt="Product 4"></div>
+            <div class="product-pic"><img src="images/shoes.png" alt="Product 5"></div>
+            <div class="product-pic"><img src="images/purplesweat.webp" alt="Product 5"></div>
+            <div class="product-pic"><img src="images/beanie.webp" alt="Product 5"></div>
+        </div>
     </div>
-    
     <div class="footer">
-        <p>Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
-        <p>Aura Attire</p>
+        <div class="social-icons">
+            <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
+        </div>
+        <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
     </div>
 </body>
 </html>
