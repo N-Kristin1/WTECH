@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b0c4b0;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        .suggested-products {
+            padding: 20px;
+        }
+        .suggested-products h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .product-card {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+        }
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+        .product-card h3 {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .product-card .price {
+            color: #333;
+            font-weight: bold;
+        }
+        .cart-container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .cart-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+        }
+        .product-details .product-name {
+            margin-bottom: 5px;
+        }
+        .product-price {
+            font-size: 0.9em;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quantity {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            min-width: 20px;
+            text-align: center;
+        }
+        .subtotal {
+            font-weight: bold;
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .cart-summary {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.1em;
+        }
+        .continue-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 150px;
+        }
+        .header {
+            background-color: #6B8F71;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: white;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+        .header-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+        .old-price {
+            color: red;
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+        .add-to-cart-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #555;
+        }
+    </style>
+    <script>
+        function updateQuantity(button, change) {
+            const quantityDiv = button.parentElement.querySelector('.quantity');
+            const currentQuantity = parseInt(quantityDiv.textContent);
+            const newQuantity = Math.max(1, currentQuantity + change); // Minimum quantity is 1
+            
+            // Update quantity
+            quantityDiv.textContent = newQuantity;
+            
+            // Update subtotal
+            const cartItem = button.closest('.cart-item');
+            const price = parseFloat(cartItem.querySelector('.product-price').textContent.replace('€', ''));
+            const subtotalDiv = cartItem.querySelector('.subtotal');
+            const newSubtotal = (price * newQuantity).toFixed(2);
+            subtotalDiv.textContent = '€' + newSubtotal;
+            
+            // Update cart total
+            updateCartTotal();
+        }
+
+        function removeItem(button) {
+            const cartItem = button.closest('.cart-item');
+            cartItem.remove();
+            updateCartTotal();
+            
+            // Check if cart is empty
+            const cartItems = document.querySelectorAll('.cart-item');
+            if (cartItems.length === 0) {
+                const cartContainer = document.querySelector('.cart-container');
+                const emptyMessage = document.createElement('div');
+                emptyMessage.style.textAlign = 'center';
+                emptyMessage.style.padding = '20px';
+                emptyMessage.style.color = '#666';
+                emptyMessage.textContent = 'Your cart is empty';
+                
+                // Insert after header
+                const cartHeader = document.querySelector('.cart-header');
+                cartHeader.insertAdjacentElement('afterend', emptyMessage);
+            }
+        }
+
+        function updateCartTotal() {
+            const subtotals = document.querySelectorAll('.subtotal');
+            let total = 0;
+            
+            subtotals.forEach(subtotal => {
+                total += parseFloat(subtotal.textContent.replace('€', ''));
+            });
+            
+            document.querySelector('.cart-subtotal').textContent = 'Cart Subtotal: €' + total.toFixed(2);
+            document.querySelector('.order-total').textContent = 'Order Total: €' + total.toFixed(2);
+        }
+
+        function addToCart(button) {
+            const productCard = button.closest('.product-card');
+            const productName = productCard.querySelector('h3').textContent;
+            const price = parseFloat(productCard.querySelector('.price').textContent.replace('€', ''));
+            
+            // Create new cart item
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <div class="product-info">
+                    <div class="product-image"></div>
+                    <div class="product-details">
+                        <div class="product-name">${productName}</div>
+                        <div class="product-price">${price}</div>
+                    </div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <div class="quantity">1</div>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="subtotal">€${price.toFixed(2)}</div>
+                <button class="remove-btn" onclick="removeItem(this)">✖</button>
+            `;
+            
+            // Remove empty cart message if exists
+            const emptyMessage = document.querySelector('.cart-container .empty-message');
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+            
+            // Add new item to cart
+            const cartContainer = document.querySelector('.cart-container');
+            const cartSummary = document.querySelector('.cart-summary');
+            cartContainer.insertBefore(cartItem, cartSummary);
+            
+            // Update totals
+            updateCartTotal();
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="logo"><a href="Main_page.html"><img src="images/logo.png" alt="Aura Attire"></a></div>
+        <div class="header-icons">
+            <div class="header-icon"><img src="images/search.png" alt="Search"></div>
+            <div class="header-icon"><img src="images/profile.png" alt="Profile"></div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="suggested-products">
+            <h2>Recommended Products</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Recommended Product 1</h3>
+                    <div class="price">€29.99</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Recommended Product 2</h3>
+                    <div class="price">€34.99</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Recommended Product 3</h3>
+                    <div class="price">€24.99</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Recommended Product 4</h3>
+                    <div class="price">€19.99</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-container">
+            <div class="cart-header">
+                <div>Products</div>
+                <div>QTY</div>
+                <div>SUBTOTAL</div>
+            </div>
+            
+            <div class="cart-item">
+                <div class="product-info">
+                    <div class="product-image"></div>
+                    <div class="product-details">
+                        <div class="product-name">Product Name</div>
+                        <div class="product-price">24.99</div>
+                    </div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <div class="quantity">1</div>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="subtotal">€24.99</div>
+                <button class="remove-btn" onclick="removeItem(this)">✖</button>
+            </div>
+            
+            <div class="cart-item">
+                <div class="product-info">
+                    <div class="product-image"></div>
+                    <div class="product-details">
+                        <div class="product-name">Product Name</div>
+                        <div class="product-price">14.99</div>
+                    </div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <div class="quantity">2</div>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="subtotal">€29.98</div>
+                <button class="remove-btn" onclick="removeItem(this)">✖</button>
+            </div>
+            
+            <div class="cart-item">
+                <div class="product-info">
+                    <div class="product-image"></div>
+                    <div class="product-details">
+                        <div class="product-name">Product Name</div>
+                        <div class="product-price">39.99</div>
+                    </div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <div class="quantity">1</div>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="subtotal">€39.99</div>
+                <button class="remove-btn" onclick="removeItem(this)">✖</button>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="cart-subtotal">Cart Subtotal: €94.96</div>
+                <div>Shipping fee</div>
+                <div class="order-total"><strong>Order Total: €94.96</strong></div>
+                <button class="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
