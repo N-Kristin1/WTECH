@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Aura Attire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #C3D8C5;
+        }
+
+        .header {
+            background-color: #6B8F71;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: absolute;
+            right: 30px;
+            background-color: #D6FFF5;
+            border: 1px solid #1D1D1B;
+            padding: 8px;
+            border-radius: 5px;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar.active {
+            width: 200px;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar.active {
+                width: 150px;
+            }
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            background-color: #1D1D1B;
+        }
+
+        .step.active {
+            background-color: white;
+            color: #1D1D1B;
+        }
+
+        .step-line {
+            width: 50px;
+            height: 2px;
+            background-color: #1D1D1B;
+        }
+
+        .order-form {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-input {
+            padding: 15px;
+            border: 2.5px solid #1D1D1B;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            background-color: #D6FFF5;
+        }
+
+        .payment-options, .delivery-options {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .payment-option, .delivery-option {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-option:last-child, .delivery-option:last-child {
+            border-bottom: none;
+        }
+
+        .option-header {
+            background-color: #1D1D1B;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-header img {
+            width: 24px;
+            filter: invert(1);
+        }
+
+        .go-to-payment {
+            background-color: #1D1D1B;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .go-to-payment:hover {
+            background-color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .order-form {
+                grid-template-columns: 1fr;
+            }
+
+            .step-line {
+                width: 30px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.querySelector('.search-icon');
+            const searchBar = document.querySelector('.search-bar');
+            let isSearchVisible = false;
+
+            searchIcon.addEventListener('click', function() {
+                isSearchVisible = !isSearchVisible;
+                if (isSearchVisible) {
+                    searchBar.classList.add('active');
+                    searchBar.focus();
+                } else {
+                    searchBar.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
+                    searchBar.classList.remove('active');
+                    isSearchVisible = false;
+                }
+            });
+
+            // Pridanie funkcionality pre platbu
+            const goToPaymentBtn = document.querySelector('.go-to-payment');
+            const paymentForm = document.querySelector('.order-form');
+
+            goToPaymentBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const creditRadio = document.querySelector('input[value="credit"]');
+                
+                if (creditRadio && creditRadio.checked) {
+                    window.location.href = 'payment_credit.html';
+                } else {
+                    // Pre ostatné platobné metódy pokračujeme na ďalší krok
+                    window.location.href = '#';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="Main_page.html" class="logo">
+            <img src="images/logo.png" alt="Aura Attire Logo">
+        </a>
+        <div class="header-icons">
+            <div class="header-icon search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <img src="images/search.png" alt="Search" class="search-icon">
+            </div>
+            <div class="header-icon">
+                <a href="login_reg.html"><img src="images/profile.png" alt="Profile"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-steps">
+        <div class="step active">1</div>
+        <div class="step-line"></div>
+        <div class="step">2</div>
+        <div class="step-line"></div>
+        <div class="step">3</div>
+    </div>
+
+    <form class="order-form">
+        <div class="personal-info">
+            <input type="text" class="form-input" placeholder="First Name" required>
+            <input type="text" class="form-input" placeholder="Last Name" required>
+            <input type="email" class="form-input" placeholder="Email Address" required>
+            <input type="text" class="form-input" placeholder="Address for Delivery" required>
+            <input type="tel" class="form-input" placeholder="Phone Number" required>
+        </div>
+
+        <div class="options">
+            <div class="payment-options">
+                <div class="option-header">
+                    Payment Method
+                </div>
+                <div class="payment-option">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="images/credit.png" alt="Credit Card" style="width: 24px; height: 24px;">
+                        Credit Card
+                    </div>
+                    <input type="radio" name="payment" value="credit">
+                </div>
+                <div class="payment-option">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="images/cash.png" alt="Cash" style="width: 24px; height: 24px;">
+                        Cash
+                    </div>
+                    <input type="radio" name="payment" value="cash">
+                </div>
+                <div class="payment-option">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="images/bank.png" alt="Bank Transfer" style="width: 24px; height: 24px;">
+                        Bank Transfer
+                    </div>
+                    <input type="radio" name="payment" value="bank">
+                </div>
+            </div>
+
+            <div class="delivery-options">
+                <div class="option-header">
+                    Deliver options
+                </div>
+                <div class="delivery-option">
+                    Home address
+                    <input type="radio" name="delivery" value="home">
+                </div>
+                <div class="delivery-option">
+                    Z-BOX
+                    <input type="radio" name="delivery" value="zbox">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <a href="#" class="go-to-payment">Go to Payment</a>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Aura Attire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #C3D8C5;
+        }
+
+        .header {
+            background-color: #6B8F71;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: absolute;
+            right: 30px;
+            background-color: #D6FFF5;
+            border: 1px solid #1D1D1B;
+            padding: 8px;
+            border-radius: 5px;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar.active {
+            width: 200px;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar.active {
+                width: 150px;
+            }
+        }
+
+        .payment-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            background-color: #1D1D1B;
+        }
+
+        .step.active {
+            background-color: white;
+            color: #1D1D1B;
+            border: 2px solid #1D1D1B;
+        }
+
+        .step-line {
+            width: 50px;
+            height: 2px;
+            background-color: #1D1D1B;
+        }
+
+        @media (max-width: 768px) {
+            .step-line {
+                width: 30px;
+            }
+        }
+
+        .payment-form {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .card-preview {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .card-preview img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-inputs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .expiry-cvv {
+            display: flex;
+            gap: 20px;
+        }
+
+        .expiry-cvv .input-group {
+            flex: 1;
+        }
+
+        .save-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .continue-btn {
+            background-color: #1D1D1B;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .continue-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .payment-form {
+                flex-direction: column;
+            }
+
+            .card-preview, .card-inputs {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.querySelector('.search-icon');
+            const searchBar = document.querySelector('.search-bar');
+            let isSearchVisible = false;
+
+            searchIcon.addEventListener('click', function() {
+                isSearchVisible = !isSearchVisible;
+                if (isSearchVisible) {
+                    searchBar.classList.add('active');
+                    searchBar.focus();
+                } else {
+                    searchBar.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
+                    searchBar.classList.remove('active');
+                    isSearchVisible = false;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="Main_page.html" class="logo">
+            <img src="images/logo.png" alt="Aura Attire Logo">
+        </a>
+        <div class="header-icons">
+            <div class="header-icon search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <img src="images/search.png" alt="Search" class="search-icon">
+            </div>
+            <div class="header-icon">
+                <a href="login_reg.html"><img src="images/profile.png" alt="Profile"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-container">
+        <div class="progress-steps">
+            <div class="step">1</div>
+            <div class="step-line"></div>
+            <div class="step active">2</div>
+            <div class="step-line"></div>
+            <div class="step">3</div>
+        </div>
+
+        <div class="payment-form">
+            <div class="card-preview">
+                <img src="images/credit_cart.webp" alt="Credit Card">
+            </div>
+
+            <div class="card-inputs">
+                <div class="input-group">
+                    <input type="text" placeholder="Card Number" maxlength="19">
+                </div>
+
+                <div class="expiry-cvv">
+                    <div class="input-group">
+                        <input type="text" placeholder="Expiry" maxlength="5">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" placeholder="CVV" maxlength="3">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Holder Name">
+                </div>
+
+                <div class="save-card">
+                    <input type="checkbox" id="save-card">
+                    <label for="save-card">Save this credit card</label>
+                </div>
+
+                <button class="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

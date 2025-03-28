@@ -130,6 +130,8 @@
       cursor: pointer;
       margin-top: 15px;
       width: 150px;
+      text-align: center;
+      display: inline-block;
     }
     .header {
       background-color: #6B8F71;
@@ -153,6 +155,7 @@
       height: 20px;
       object-fit: contain;
       filter: brightness(1.1);
+      cursor: pointer;
     }
     .add-to-cart-btn {
       background-color: #1D1E18;
@@ -169,11 +172,34 @@
       background-color: #555;
     }
 
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      position: absolute;
+      right: 30px;
+      background-color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      width: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar.active {
+      width: 200px;
+      opacity: 1;
+    }
+
     /* Responsive styles */
     @media (max-width: 768px) {
       .main-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         padding: 10px;
       }
       .cart-header, .cart-item {
@@ -187,6 +213,9 @@
       }
       .cart-summary {
         text-align: left;
+      }
+      .search-bar.active {
+        width: 150px;
       }
     }
   </style>
@@ -282,14 +311,42 @@
             // Update totals
             updateCartTotal();
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.querySelector('.search-icon');
+            const searchBar = document.querySelector('.search-bar');
+            let isSearchVisible = false;
+
+            searchIcon.addEventListener('click', function() {
+                isSearchVisible = !isSearchVisible;
+                if (isSearchVisible) {
+                    searchBar.classList.add('active');
+                    searchBar.focus();
+                } else {
+                    searchBar.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
+                    searchBar.classList.remove('active');
+                    isSearchVisible = false;
+                }
+            });
+        });
     </script>
 </head>
 <body>
     <div class="header">
         <div class="logo"><a href="Main_page.html"><img src="images/logo.png" alt="Aura Attire"></a></div>
         <div class="header-icons">
-            <div class="header-icon"><img src="images/search.png" alt="Search"></div>
-            <div class="header-icon"><img src="images/profile.png" alt="Profile"></div>
+            <div class="header-icon search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <img src="images/search.png" alt="Search" class="search-icon">
+            </div>
+            <div class="header-icon">
+                <a href="login_reg.html"><img src="images/profile.png" alt="Profile"></a>
+            </div>
         </div>
     </div>
 
@@ -386,7 +443,7 @@
                 <div class="cart-subtotal">Cart Subtotal: €94.96</div>
                 <div>Shipping fee</div>
                 <div class="order-total"><strong>Order Total: €94.96</strong></div>
-                <button class="continue-btn">Continue</button>
+                <a href="order_confirmation.html" class="continue-btn" style="text-decoration: none; display: inline-block;">Continue</a>
             </div>
         </div>
     </div>
