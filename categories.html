@@ -16,7 +16,7 @@
       justify-content: space-between;
       align-items: center;
       background-color: #6B8F71;
-      padding: 5px 20px;
+      width: 100%;
     }
     
     .footer {
@@ -27,6 +27,8 @@
       margin-top: 20px;
       height: 100px;
       font-weight: lighter;
+      position: relative;     /* zabezpečí, že sa neprekrýva */
+      z-index: 1;
     }
 
     header .logo img{
@@ -35,7 +37,8 @@
 
     header .icons {
       display: flex;
-      gap: 15px;
+      gap: 20px;
+      padding: 20px;
       height: 40px;
     }
 
@@ -75,6 +78,7 @@
   gap: 10px;
   cursor: pointer;
   padding: 5px;
+    margin-left: 20px;
 }
 
 .custom-checkbox .checkmark {
@@ -107,8 +111,8 @@
     }
 
     .sidebar {
-      width: 200px;
-      padding: 20px;
+      width: 260px;
+        height: 700px;
       background-color: #6B8F71;
       color: #D6FFF5;
       border-radius: 10px;
@@ -118,6 +122,7 @@
 
     .sidebar h4 {
       margin-top: 20px;
+        margin-left: 20px
     }
 
     .content {
@@ -196,7 +201,9 @@
     }
 
     .price-slider {
-      width: 100%;
+      width: 85%;
+        margin-left: 20px;
+        
     }
 
     @media (max-width: 600px) {
@@ -216,7 +223,7 @@
 <body>
 
   <header>
-    <div class="logo"><a href="index.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a></div>
+    <div class="logo"><a href="Main_page.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a></div>
     <div class="icons">
       <input type="text" placeholder="Search..." />
       <img src="images/cart.png" alt="cart">
