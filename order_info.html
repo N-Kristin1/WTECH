@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Information - Aura Attire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #C3D8C5;
+        }
+
+        .header {
+            background-color: #6B8F71;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: absolute;
+            right: 30px;
+            background-color: #D6FFF5;
+            border: 1px solid #1D1D1B;
+            padding: 8px;
+            border-radius: 5px;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar.active {
+            width: 200px;
+            opacity: 1;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            background-color: #1D1D1B;
+        }
+
+        .step.active {
+            background-color: white;
+            color: #1D1D1B;
+        }
+
+        .step-line {
+            width: 50px;
+            height: 2px;
+            background-color: #1D1D1B;
+        }
+
+        .order-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .thank-you {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .thank-you h1 {
+            color: #1D1D1B;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .thank-you p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .order-details {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #1D1D1B;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6B8F71;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .info-section h3 {
+            color: #1D1D1B;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .signature {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .signature img {
+            height: 80px;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .signature img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-bar.active {
+                width: 150px;
+            }
+
+            .step-line {
+                width: 30px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.querySelector('.search-icon');
+            const searchBar = document.querySelector('.search-bar');
+            let isSearchVisible = false;
+
+            searchIcon.addEventListener('click', function() {
+                isSearchVisible = !isSearchVisible;
+                if (isSearchVisible) {
+                    searchBar.classList.add('active');
+                    searchBar.focus();
+                } else {
+                    searchBar.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
+                    searchBar.classList.remove('active');
+                    isSearchVisible = false;
+                }
+            });
+
+            // Get payment and delivery methods from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentMethod = urlParams.get('payment');
+            const deliveryMethod = urlParams.get('delivery');
+
+            // Show appropriate payment information
+            const creditInfo = document.getElementById('credit-payment-info');
+            const cashInfo = document.getElementById('cash-payment-info');
+            const bankInfo = document.getElementById('bank-payment-info');
+
+            creditInfo.style.display = 'none';
+            cashInfo.style.display = 'none';
+            bankInfo.style.display = 'none';
+
+            if (paymentMethod === 'cash') {
+                cashInfo.style.display = 'block';
+            } else if (paymentMethod === 'bank') {
+                bankInfo.style.display = 'block';
+            } else {
+                creditInfo.style.display = 'block';
+            }
+
+            // Show appropriate delivery information
+            const homeDeliveryInfo = document.getElementById('home-delivery-info');
+            const zboxDeliveryInfo = document.getElementById('zbox-delivery-info');
+
+            homeDeliveryInfo.style.display = 'none';
+            zboxDeliveryInfo.style.display = 'none';
+
+            if (deliveryMethod === 'zbox') {
+                zboxDeliveryInfo.style.display = 'block';
+            } else {
+                homeDeliveryInfo.style.display = 'block';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="Main_page.html" class="logo">
+            <img src="images/logo.png" alt="Aura Attire Logo">
+        </a>
+        <div class="header-icons">
+            <div class="header-icon search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <img src="images/search.png" alt="Search" class="search-icon">
+            </div>
+            <div class="header-icon">
+                <a href="login_reg.html"><img src="images/profile.png" alt="Profile"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-steps">
+        <div class="step">1</div>
+        <div class="step-line"></div>
+        <div class="step">2</div>
+        <div class="step-line"></div>
+        <div class="step active">3</div>
+    </div>
+
+    <div class="order-container">
+        <div class="thank-you">
+            <h1>Thank you for your purchase!</h1>
+            <p>You will receive a confirmation email shortly.</p>
+        </div>
+
+        <div class="order-details">
+            <h2 class="section-title">Order Information</h2>
+            <div class="info-grid">
+                <div class="info-section">
+                    <h3>Personal Information</h3>
+                    <p><strong>Name:</strong> <span id="customer-name">John Doe</span></p>
+                    <p><strong>Email:</strong> <span id="customer-email">john@example.com</span></p>
+                    <p><strong>Phone:</strong> <span id="customer-phone">+1234567890</span></p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Delivery Information</h3>
+                    <div id="home-delivery-info">
+                        <p><strong>Delivery Method:</strong> Home Delivery</p>
+                        <p><strong>Address:</strong> <span id="delivery-address">123 Street Name</span></p>
+                        <p><strong>Estimated Delivery:</strong> 3-5 business days</p>
+                    </div>
+                    <div id="zbox-delivery-info" style="display: none;">
+                        <p><strong>Delivery Method:</strong> Z-BOX</p>
+                        <p><strong>Pickup Location:</strong> <span id="zbox-location">Z-BOX Bratislava</span></p>
+                        <p><strong>Estimated Delivery:</strong> 2-3 business days</p>
+                        <p><strong>Pickup Code:</strong> <span id="pickup-code">123456</span></p>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3>Payment Information</h3>
+                    <div id="credit-payment-info">
+                        <p><strong>Payment Method:</strong> <span id="payment-method">Credit Card</span></p>
+                        <p><strong>Card Number:</strong> **** **** **** 1234</p>
+                    </div>
+                    <div id="cash-payment-info" style="display: none;">
+                        <p><strong>Payment Method:</strong> Cash</p>
+                        <p><strong>Amount Due:</strong> €94.96</p>
+                        <p><strong>Pay at:</strong> Delivery</p>
+                    </div>
+                    <div id="bank-payment-info" style="display: none;">
+                        <p><strong>Payment Method:</strong> Bank Transfer</p>
+                        <p><strong>IBAN:</strong> SK12 3456 7890 1234 5678 9012</p>
+                        <p><strong>SWIFT:</strong> GIBASKBX</p>
+                        <p><strong>Variable Symbol:</strong> <span id="order-number">2024001</span></p>
+                        <p><strong>Amount:</strong> €94.96</p>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3>Order Summary</h3>
+                    <p><strong>Subtotal:</strong> €94.96</p>
+                    <p><strong>Shipping:</strong> €0.00</p>
+                    <p><strong>Total:</strong> €94.96</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="signature">
+            <p>Sincerely yours,</p>
+            <img src="images/logo.png" alt="Aura Attire">
+        </div>
+    </div>
+</body>
+</html>

@@ -14,7 +14,7 @@
 
         .header {
             background-color: #6B8F71;
-            padding: 10px;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -211,12 +211,19 @@
             goToPaymentBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const creditRadio = document.querySelector('input[value="credit"]');
+                const cashRadio = document.querySelector('input[value="cash"]');
+                const bankRadio = document.querySelector('input[value="bank"]');
                 
                 if (creditRadio && creditRadio.checked) {
                     window.location.href = 'payment_credit.html';
+                } else if (cashRadio && cashRadio.checked) {
+                    const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value || 'home';
+                    window.location.href = `order_info.html?payment=cash&delivery=${deliveryMethod}`;
+                } else if (bankRadio && bankRadio.checked) {
+                    const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value || 'home';
+                    window.location.href = `order_info.html?payment=bank&delivery=${deliveryMethod}`;
                 } else {
-                    // Pre ostatné platobné metódy pokračujeme na ďalší krok
-                    window.location.href = '#';
+                    alert('Please select a payment method');
                 }
             });
         });
