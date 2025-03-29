@@ -14,7 +14,7 @@
 
         .header {
             background-color: #6B8F71;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -153,14 +153,13 @@
 
         .go-to-payment {
             background-color: #1D1D1B;
-            color: white;
+            color: #D6FFF5;
             padding: 15px 30px;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            width: 100%;
-            max-width: 300px;
+            width: 200px;
             margin: 40px auto;
             display: block;
             text-align: center;
@@ -211,19 +210,12 @@
             goToPaymentBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const creditRadio = document.querySelector('input[value="credit"]');
-                const cashRadio = document.querySelector('input[value="cash"]');
-                const bankRadio = document.querySelector('input[value="bank"]');
                 
                 if (creditRadio && creditRadio.checked) {
                     window.location.href = 'payment_credit.html';
-                } else if (cashRadio && cashRadio.checked) {
-                    const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value || 'home';
-                    window.location.href = `order_info.html?payment=cash&delivery=${deliveryMethod}`;
-                } else if (bankRadio && bankRadio.checked) {
-                    const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value || 'home';
-                    window.location.href = `order_info.html?payment=bank&delivery=${deliveryMethod}`;
                 } else {
-                    alert('Please select a payment method');
+                    // Pre ostatné platobné metódy pokračujeme na ďalší krok
+                    window.location.href = '#';
                 }
             });
         });
