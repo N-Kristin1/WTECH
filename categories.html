@@ -8,44 +8,41 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #97BEA4 ;
+      background-color: #97BEA4;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       background-color: #6B8F71;
       width: 100%;
     }
-    
-    .footer {
-      background-color: #AAD2BA;
-      text-align: center;
-      align-content: center;
-      width: 100%;
-      margin-top: 20px;
-      height: 100px;
-      font-weight: lighter;
-      position: relative;     /* zabezpečí, že sa neprekrýva */
-      z-index: 1;
-    }
 
-    header .logo img{
+    header .logo img {
       height: 100px;
     }
 
     header .icons {
       display: flex;
       gap: 20px;
-      padding: 20px;
+      padding-bottom: 20px;
+
+      padding-left: 20px;
       height: 40px;
+    }
+
+    .link-icon {
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
     }
 
     nav {
       display: flex;
       gap: 10px;
-      justify-content:right;
+      justify-content: right;
       background-color: #97BEA4;
       padding: 20px;
       flex-wrap: wrap;
@@ -62,48 +59,46 @@
     nav button:focus,
     .sort-buttons button:focus {
       background-color: #2C2C2C;
-      color: #D6FFF5; /* svetlá zelená */
+      color: #D6FFF5;
       outline: none;
     }
-    
-    /* Skryť pôvodný checkbox */
-.custom-checkbox input[type="checkbox"] {
-  display: none;
-}
 
-/* Obal checkmarku */
-.custom-checkbox {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 5px;
-    margin-left: 20px;
-}
+    .custom-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 20px;
+    }
 
-.custom-checkbox .checkmark {
-  height: 15px;
-  width: 15px;
-  background-color: white;
-  border: 2px solid #2C2C2C;
-  border-radius: 4px;
-  position: relative;
-}
+    .custom-checkbox input[type="checkbox"] {
+      display: none;
+    }
 
-.custom-checkbox input:checked + .checkmark {
-  background-color: #2C2C2C;
-  border-color: #2C2C2C;
-}
+    .custom-checkbox .checkmark {
+      height: 15px;
+      width: 15px;
+      background-color: white;
+      border: 2px solid #2C2C2C;
+      border-radius: 4px;
+      position: relative;
+    }
 
-.custom-checkbox input:checked + .checkmark::after {
-  content: "✓";
-  position: absolute;
-  color: #D6FFF5;
-  font-size: 12px;
-  top: 0;
-  left: 4px;
-}
-    
+    .custom-checkbox input:checked + .checkmark {
+      background-color: #2C2C2C;
+      border-color: #2C2C2C;
+    }
+
+    .custom-checkbox input:checked + .checkmark::after {
+      content: "✓";
+      position: absolute;
+      color: #D6FFF5;
+      font-size: 12px;
+      top: 0;
+      left: 4px;
+    }
+
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -112,7 +107,7 @@
 
     .sidebar {
       width: 260px;
-        height: 700px;
+      height: 700px;
       background-color: #6B8F71;
       color: #D6FFF5;
       border-radius: 10px;
@@ -122,7 +117,7 @@
 
     .sidebar h4 {
       margin-top: 20px;
-        margin-left: 20px
+      margin-left: 20px;
     }
 
     .content {
@@ -164,14 +159,12 @@
 
     .product {
       background: #2C2C2C;
-      color: white;
       border-radius: 20px;
       padding: 20px;
       text-align: left;
       display: flex;
       flex-direction: column;
       color: #D6FFF5;
-      align-items: left;
     }
 
     .product img {
@@ -182,7 +175,7 @@
       margin-bottom: 10px;
     }
 
-     .load-more {
+    .load-more {
       text-align: center;
       margin: 30px 0;
     }
@@ -196,14 +189,41 @@
       cursor: pointer;
     }
 
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-
     .price-slider {
       width: 85%;
-        margin-left: 20px;
-        
+      margin-left: 20px;
+    }
+
+    .footer {
+      background-color: #AAD2BA;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-text {
+      max-width: 100%;
+      word-wrap: break-word;
     }
 
     @media (max-width: 600px) {
@@ -223,11 +243,13 @@
 <body>
 
   <header>
-    <div class="logo"><a href="Main_page.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a></div>
+    <div class="logo">
+      <a href="Main_page.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a>
+    </div>
     <div class="icons">
-      <input type="text" placeholder="Search..." />
-      <img src="images/cart.png" alt="cart">
-      <img src="images/profile.png" alt="profile icon">
+      <input type="text" placeholder="Search.." />
+      <a href="shop_cart.html"><img src="images/cart.png" alt="cart" class="link-icon"></a>
+      <a href="login_reg.html"><img src="images/profile.png" alt="profile icon" class="link-icon"></a>
     </div>
   </header>
 
@@ -236,8 +258,6 @@
     <button>Men</button>
     <button>Women</button>
     <button>Children</button>
-    <button>Contact</button>
-    <button>Socials</button>
   </nav>
 
   <div class="container">
@@ -272,7 +292,6 @@
           <button>New</button>
           <button>Price ascending</button>
           <button>Price descending</button>
-          <button>Rating</button>
         </div>
       </div>
 
@@ -294,8 +313,12 @@
   </div>
 
   <div class="footer">
-    <p>Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
-    <p>Aura Attire</p>
+    <div class="social-icons">
+      <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
+    </div>
+    <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
   </div>
 
   <script>
