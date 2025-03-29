@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #97BEA4;
+      color: #111;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #6B8F71;
+      padding: 15px 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      height: 60px;
+    }
+
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .icons input[type="text"] {
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: none;
+      width: 200px;
+    }
+
+    .icons img {
+      height: 25px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 15px 20px;
+      gap: 10px;
+      background-color: #97BEA4;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: white;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      gap: 40px;
+      justify-content: center;
+    }
+
+    .product-images, .product-details {
+      flex: 1 1 400px;
+      max-width: 500px;
+    }
+
+    .main-image {
+      width: 100%;
+      background: white;
+      border: 5px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-image img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .thumbnail-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border: 2px solid black;
+    }
+
+    .product-details h2 {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .price del {
+      color: #c44;
+      margin-left: 10px;
+    }
+
+    .colors, .sizes {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .colors span, .sizes select {
+      padding: 5px;
+    }
+
+    .color-dot {
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .quantity button {
+      padding: 5px 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions button {
+      padding: 10px 20px;
+      background-color: #2C2C2C;
+      color: #D6FFF5;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 30px;
+      padding: 20px 40px;
+      background-color: #2C2C2C;
+      color: #D6FFF5;
+    }
+
+    .description {
+      padding: 20px 40px;
+      background-color: #2C2C2C;
+      color: #D6FFF5;
+      font-size: 14px;
+    }
+
+    .related {
+      background-color: #2C2C2C;
+      color: #D6FFF5;
+      padding: 30px 50px;
+    }
+
+    .related-products {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .related-product {
+      background: white;
+      color: black;
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
+      width: 150px;
+    }
+
+    .footer {
+      background-color: #A3BDA5;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-text {
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+
+    /* ===== Responsive Styles ===== */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .icons {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .icons input[type="text"] {
+        width: 100%;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .product-container {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .product-images, .product-details {
+        max-width: 100%;
+        flex: 1 1 100%;
+      }
+
+      .thumbnail {
+        width: 70px;
+        height: 70px;
+      }
+
+      .tabs {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .related-products {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="images/blacklogo.png" alt="Aura Attire Logo"></div>
+    <div class="icons">
+      <input type="text" placeholder="Search..." />
+      <img src="images/cart.png" alt="cart">
+      <img src="images/profile.png" alt="profile">
+    </div>
+  </header>
+
+  <nav>
+    <button>Home</button>
+    <button>Men</button>
+    <button>Women</button>
+    <button>Children</button>
+  </nav>
+
+  <div class="product-container">
+    <div class="product-images">
+      <div class="main-image"><img src="images/product-placeholder.jpg" alt="Product"></div>
+      <div class="thumbnail-row">
+        <div class="thumbnail"></div>
+        <div class="thumbnail"></div>
+        <div class="thumbnail"></div>
+        <div class="thumbnail"></div>
+      </div>
+    </div>
+    <div class="product-details">
+      <h2>Nike Airmax 270 React</h2>
+      <div class="price">€249.99 <del>€299.99</del></div>
+      <p><strong>Availability:</strong> In stock</p>
+      <p><strong>Category:</strong> Shoes</p>
+      <p><strong>Free shipping</strong></p>
+      <div class="colors">
+        <span>Select Color:</span>
+        <span class="color-dot" style="background:red"></span>
+        <span class="color-dot" style="background:green"></span>
+        <span class="color-dot" style="background:yellow"></span>
+        <span class="color-dot" style="background:black"></span>
+      </div>
+      <div class="sizes">
+        <label>Size</label>
+        <select>
+          <option>42</option>
+        </select>
+      </div>
+      <div class="quantity">
+        <button>-</button>
+        <span>1</span>
+        <button>+</button>
+      </div>
+      <div class="actions">
+        <button>Add To Cart</button>
+        <button>♡</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div>Product Information</div>
+    <div>Another tab</div>
+  </div>
+
+  <div class="description">
+    <p>Air max are always very comfortable fit, clean and just perfect in every way...</p>
+  </div>
+
+  <div class="related">
+    <h3 style="text-align:center">Related products</h3>
+    <div class="related-products">
+      <div class="related-product">
+        <div class="thumbnail"></div>
+        Nike Airmax 130 React €130.99
+      </div>
+      <div class="related-product">
+        <div class="thumbnail"></div>
+        Nike Airmax 270 Pro<br>€213.99
+      </div>
+      <div class="related-product">
+        <div class="thumbnail"></div>
+        Nike Airmax 200 OverJ<br>€149.99
+      </div>
+      <div class="related-product">
+        <div class="thumbnail"></div>
+        Nike Airmax 100<br>€170.99
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="social-icons">
+      <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
+    </div>
+    <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const product = params.get("product");
+
+    const productData = {
+      whiteshirt: {
+        name: "White T-Shirt",
+        image: "images/whiteshirt.webp",
+        price: "€19.99",
+        original: "€29.99",
+        availability: "In stock",
+        category: "Tshirts"
+      },
+      greenshirt: {
+        name: "Green T-Shirt",
+        image: "images/greenshirt.webp",
+        price: "€17.99",
+        original: "€25.99",
+        availability: "In stock",
+        category: "Tshirts"
+      },
+      purplesweat: {
+        name: "Purple Sweater",
+        image: "images/purplesweat.webp",
+        price: "€39.99",
+        original: "€49.99",
+        availability: "In stock",
+        category: "Sweaters"
+      },
+      leatherjacket: {
+        name: "Leather Jacket",
+        image: "images/leatherjacket.jpg",
+        price: "€89.99",
+        original: "€119.99",
+        availability: "Low stock",
+        category: "Jackets"
+      },
+      bluejeans: {
+        name: "Blue Jeans",
+        image: "images/1.webp",
+        price: "€49.99",
+        original: "€59.99",
+        availability: "In stock",
+        category: "Pants"
+      },
+      whiteshoes: {
+        name: "White Shoes",
+        image: "images/whiteshoes.webp",
+        price: "€59.99",
+        original: "€79.99",
+        availability: "In stock",
+        category: "Shoes"
+      },
+      blackboots: {
+        name: "Black Boots",
+        image: "images/blackboots.webp",
+        price: "€74.99",
+        original: "€99.99",
+        availability: "In stock",
+        category: "Shoes"
+      },
+      redhat: {
+        name: "Red Hat",
+        image: "images/beanie.webp",
+        price: "€14.99",
+        original: "€19.99",
+        availability: "In stock",
+        category: "Headwear"
+      }
+    };
+
+    if (productData[product]) {
+      const data = productData[product];
+      document.querySelector(".product-details h2").textContent = data.name;
+      document.querySelector(".price").innerHTML = `${data.price} <del>${data.original}</del>`;
+      document.querySelector(".main-image img").src = data.image;
+      document.querySelector(".main-image img").alt = data.name;
+
+      const details = document.querySelector(".product-details");
+      details.querySelectorAll("p").forEach(p => p.remove());
+
+      const infoHTML = `
+        <p><strong>Availability:</strong> ${data.availability}</p>
+        <p><strong>Category:</strong> ${data.category}</p>
+        <p><strong>Free shipping</strong></p>
+      `;
+      details.insertAdjacentHTML("beforeend", infoHTML);
+    } else {
+      document.querySelector(".product-details h2").textContent = "Product Not Found";
+      document.querySelector(".main-image img").style.display = "none";
+    }
+  </script>
+</body>
+</html>
