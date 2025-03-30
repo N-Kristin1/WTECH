@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Aura Attire</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             overflow-x: hidden;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #C3D8C5;
+            width: 100vw;
+            position: relative;
         }
 
         .header {
@@ -22,6 +30,11 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
+            width: 100%;
+            margin: 0;
+            position: relative;
+            left: 0;
+            right: 0;
         }
 
         .header-left {
@@ -99,7 +112,8 @@
             font-size: clamp(30px, 5vw, 60px);
             font-weight: bold;
             font-family: 'Poppins', sans-serif;
-            padding: 20px;
+            padding: 20px 0;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -114,11 +128,11 @@
             font-size: 42px;
             font-weight: 800;
             font-family: 'Poppins', sans-serif;
-            padding: 20px 40px;
+            padding: 20px 0;
             color: #1D1D1B;
             display: inline-block;
-            width: auto;
-            margin: 30px 40px;
+            width: 100%;
+            margin: 10px 0;
             text-transform: uppercase;
             letter-spacing: 3px;
             position: relative;
@@ -336,8 +350,15 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                width: 100vw;
+                overflow-x: hidden;
+            }
+
             .header {
                 padding: 5px;
+                margin: 0;
+                width: 100%;
             }
 
             .logo img {
@@ -346,7 +367,7 @@
 
             .nav-links {
                 width: 100%;
-                margin-top: 10px;
+                margin: 10px 0 0 0;
             }
 
             .nav-links a {
@@ -359,26 +380,59 @@
 
             .newest-collection {
                 flex-direction: column;
+                padding: 0;
+                margin: 0;
+                width: 100%;
             }
 
             .newest-collection img {
                 width: 100%;
                 height: auto;
                 max-height: 500px;
+                margin: 0;
+                border-radius: 0;
             }
 
             .advertisement {
                 width: 100%;
                 min-height: 300px;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .collection {
+                margin: 10px 0;
+                padding: 10px 0;
             }
 
             .products-container {
-                padding: 5px;
+                padding: 5px 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            .products {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            .ad-banner {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .ad-banner img {
+                width: 100%;
+                border-radius: 0;
             }
 
             .footer {
                 flex-direction: column;
                 gap: 10px;
+                width: 100%;
+                margin: 0;
+                padding: 10px;
             }
         }
 
@@ -386,12 +440,14 @@
             .header-left {
                 width: 100%;
                 justify-content: center;
+                box-sizing: border-box;
             }
 
             .header-icons {
                 width: 100%;
                 justify-content: center;
                 margin-top: 10px;
+                box-sizing: border-box;
             }
 
             .search-bar {
@@ -418,7 +474,7 @@
         <div class="header-icons">
             <input class="search-bar" type="text" placeholder="Search">
             <img src="images/search.png" alt="Search Icon">
-            <img src="images/profile.png" alt="User Icon">
+            <a href="login_reg.html"><img src="images/profile.png" alt="User Icon"></a>
         </div>
     </div>
     <div class="main-title">Aura Attire</div>
