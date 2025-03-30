@@ -21,7 +21,7 @@
     }
     .suggested-products h2 {
       margin-bottom: 20px;
-      color: #1D1E18;
+      color: #2C2C2C;
     }
     .product-grid {
       display: grid;
@@ -47,7 +47,7 @@
       font-size: 0.9em;
     }
     .product-card .price {
-      color: #333;
+      color: #2C2C2C;
       font-weight: bold;
     }
     .cart-container {
@@ -59,7 +59,7 @@
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       padding: 10px;
-      background-color: #1D1E18;
+      background-color: #2C2C2C;
       color: #D9FFF5;
       border-radius: 5px;
       margin-bottom: 10px;
@@ -92,7 +92,7 @@
       height: 25px;
       border-radius: 50%;
       border: none;
-      background-color: #1D1E18;
+      background-color: #2C2C2C;
       color: #D9FFF5;
       cursor: pointer;
       display: flex;
@@ -100,7 +100,7 @@
       justify-content: center;
     }
     .quantity {
-      background-color: #1D1E18;
+      background-color: #2C2C2C;
       color: #D9FFF5;
       padding: 5px 10px;
       border-radius: 15px;
@@ -122,7 +122,7 @@
       font-size: 1.1em;
     }
     .continue-btn {
-      background-color: #1D1E18;
+      background-color: #2C2C2C;
       color: #D9FFF5;
       border: none;
       padding: 10px 20px;
@@ -158,7 +158,7 @@
       cursor: pointer;
     }
     .add-to-cart-btn {
-      background-color: #1D1E18;
+      background-color: #2C2C2C;
       color: #D9FFF5;
       border: none;
       padding: 8px 15px;
@@ -195,7 +195,6 @@
       opacity: 1;
     }
 
-    /* Responsive styles */
     @media (max-width: 768px) {
       .main-container {
         display: flex;
@@ -223,19 +222,18 @@
         function updateQuantity(button, change) {
             const quantityDiv = button.parentElement.querySelector('.quantity');
             const currentQuantity = parseInt(quantityDiv.textContent);
-            const newQuantity = Math.max(1, currentQuantity + change); // Minimum quantity is 1
+            const newQuantity = Math.max(1, currentQuantity + change); //aspon jeden aby "existoval"
             
-            // Update quantity
+            //update kvantinu/mnozstvo
             quantityDiv.textContent = newQuantity;
             
-            // Update subtotal
             const cartItem = button.closest('.cart-item');
             const price = parseFloat(cartItem.querySelector('.product-price').textContent.replace('€', ''));
             const subtotalDiv = cartItem.querySelector('.subtotal');
             const newSubtotal = (price * newQuantity).toFixed(2);
             subtotalDiv.textContent = '€' + newSubtotal;
             
-            // Update cart total
+            //update celkovu cenu
             updateCartTotal();
         }
 
@@ -244,7 +242,7 @@
             cartItem.remove();
             updateCartTotal();
             
-            // Check if cart is empty
+            //je kosik prazdny?
             const cartItems = document.querySelectorAll('.cart-item');
             if (cartItems.length === 0) {
                 const cartContainer = document.querySelector('.cart-container');
@@ -254,7 +252,6 @@
                 emptyMessage.style.color = '#666';
                 emptyMessage.textContent = 'Your cart is empty';
                 
-                // Insert after header
                 const cartHeader = document.querySelector('.cart-header');
                 cartHeader.insertAdjacentElement('afterend', emptyMessage);
             }
@@ -277,7 +274,7 @@
             const productName = productCard.querySelector('h3').textContent;
             const price = parseFloat(productCard.querySelector('.price').textContent.replace('€', ''));
             
-            // Create new cart item
+            //novy produkt v kosiku
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
@@ -297,18 +294,17 @@
                 <button class="remove-btn" onclick="removeItem(this)">✖</button>
             `;
             
-            // Remove empty cart message if exists
             const emptyMessage = document.querySelector('.cart-container .empty-message');
             if (emptyMessage) {
                 emptyMessage.remove();
             }
             
-            // Add new item to cart
+            //novy produkt do kosika
             const cartContainer = document.querySelector('.cart-container');
             const cartSummary = document.querySelector('.cart-summary');
             cartContainer.insertBefore(cartItem, cartSummary);
             
-            // Update totals
+            //update celkovej ceny
             updateCartTotal();
         }
 

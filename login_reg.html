@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login & Register | Aura Attire</title>
+  <title>Login a Register | Aura Attire</title>
   <style>
     body {
         margin: 0;
@@ -205,11 +205,11 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
-        // Check for admin credentials
+        //kontrola admin loginu
         if (email === 'admin@auraattire.com' && password === 'admin123') {
             window.location.href = 'admin_main.html';
         } else {
-            // Regular user login (in real app, this would be handled server-side)
+            //default user login
             window.location.href = 'Main_page.html';
         }
     });

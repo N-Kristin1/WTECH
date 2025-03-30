@@ -8,52 +8,42 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #C3D8C5 ;
+      background-color: #97BEA4;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #7ea483;
-      padding: 5px 20px;
-    }
-    
-    .footer {
-      background-color: #A3BDA5;
-      text-align: center;
-      align-content: center;
+      flex-wrap: wrap;
+      background-color: #6B8F71;
       width: 100%;
-      margin-top: 20px;
-      height: 100px;
-      font-weight: lighter;
-        }
+    }
 
-    header .logo img{
+    header .logo img {
       height: 100px;
     }
 
     header .icons {
       display: flex;
-      gap: 15px;
+      gap: 20px;
+      padding-bottom: 20px;
+
+      padding-left: 20px;
       height: 40px;
     }
 
-    header .icons img {
+    .link-icon {
       height: 40px;
       width: 40px;
-    }
-
-    header .icons a {
-      display: flex;
-      align-items: center;
+      cursor: pointer;
     }
 
     nav {
       display: flex;
       gap: 10px;
-      justify-content:right;
-      background-color: #C3D8C5;
+      justify-content: right;
+      background-color: #97BEA4;
       padding: 20px;
       flex-wrap: wrap;
     }
@@ -66,6 +56,49 @@
       cursor: pointer;
     }
 
+    nav button:focus,
+    .sort-buttons button:focus {
+      background-color: #2C2C2C;
+      color: #D6FFF5;
+      outline: none;
+    }
+
+    .custom-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 20px;
+    }
+
+    .custom-checkbox input[type="checkbox"] {
+      display: none;
+    }
+
+    .custom-checkbox .checkmark {
+      height: 15px;
+      width: 15px;
+      background-color: white;
+      border: 2px solid #2C2C2C;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .custom-checkbox input:checked + .checkmark {
+      background-color: #2C2C2C;
+      border-color: #2C2C2C;
+    }
+
+    .custom-checkbox input:checked + .checkmark::after {
+      content: "✓";
+      position: absolute;
+      color: #D6FFF5;
+      font-size: 12px;
+      top: 0;
+      left: 4px;
+    }
+
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -73,9 +106,10 @@
     }
 
     .sidebar {
-      width: 200px;
-      padding: 20px;
-      background-color: #8eb295;
+      width: 260px;
+      height: 700px;
+      background-color: #6B8F71;
+      color: #D6FFF5;
       border-radius: 10px;
       margin-right: 20px;
       flex-shrink: 0;
@@ -83,6 +117,7 @@
 
     .sidebar h4 {
       margin-top: 20px;
+      margin-left: 20px;
     }
 
     .content {
@@ -93,7 +128,7 @@
     .search-sort {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       flex-wrap: wrap;
       gap: 10px;
     }
@@ -111,6 +146,9 @@
       padding: 5px 10px;
       border-radius: 10px;
       cursor: pointer;
+      background: white;
+      color: black;
+      border: 1px solid #444;
     }
 
     .products {
@@ -120,14 +158,13 @@
     }
 
     .product {
-      background: #333;
-      color: white;
+      background: #2C2C2C;
       border-radius: 20px;
       padding: 20px;
       text-align: left;
       display: flex;
       flex-direction: column;
-      align-items: left;
+      color: #D6FFF5;
     }
 
     .product img {
@@ -146,18 +183,47 @@
     .load-more button {
       padding: 10px 20px;
       border-radius: 10px;
-      background-color: #1d1d1b;
-      color: white;
+      background-color: #2C2C2C;
+      color: #D6FFF5;
       border: none;
       cursor: pointer;
     }
 
-    input[type="checkbox"] {
-      margin-right: 5px;
+    .price-slider {
+      width: 85%;
+      margin-left: 20px;
     }
 
-    .price-slider {
-      width: 100%;
+    .footer {
+      background-color: #AAD2BA;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-text {
+      max-width: 100%;
+      word-wrap: break-word;
     }
 
     @media (max-width: 600px) {
@@ -177,11 +243,13 @@
 <body>
 
   <header>
-    <div class="logo"><a href = "Main_page.html"><img src="images/logo.png" alt="Aura Attire Logo"></a></div>
+    <div class="logo">
+      <a href="Main_page.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a>
+    </div>
     <div class="icons">
-      <input type="text" placeholder="Search..." />
-      <a href="shop_cart.html"><img src="images/cart.png" alt="cart" style="height: 40px; width: 40px;"></a>
-      <a href="login_reg.html"><img src="images/profile.png" alt="profile icon" style="height: 40px; width: 40px;"></a>
+      <input type="text" placeholder="Search.." />
+      <a href="shop_cart.html"><img src="images/cart.png" alt="cart" class="link-icon"></a>
+      <a href="login_reg.html"><img src="images/profile.png" alt="profile icon" class="link-icon"></a>
     </div>
   </header>
 
@@ -190,57 +258,52 @@
     <button>Men</button>
     <button>Women</button>
     <button>Children</button>
-    <button>Contact</button>
-    <button>Socials</button>
   </nav>
 
   <div class="container">
     <div class="sidebar">
       <h4>Category</h4>
-      <label><input type="checkbox" checked /> Tshirts</label><br>
-      <label><input type="checkbox" checked /> Pants</label><br>
-      <label><input type="checkbox" checked /> Shorts</label><br>
-      <label><input type="checkbox" checked /> Jackets</label><br>
-      <label><input type="checkbox" checked /> Shoes</label><br>
-      <label><input type="checkbox" checked /> Headwear</label>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Tshirts</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Pants</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Shorts</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Jackets</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Shoes</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Headwear</label>
 
       <h4>Price</h4>
       <input type="range" min="1" max="1000" value="100" class="price-slider">
 
       <h4>Color</h4>
-      <label><input type="checkbox" checked /> Blue</label><br>
-      <label><input type="checkbox" checked /> Brown</label><br>
-      <label><input type="checkbox" checked /> White</label><br>
-      <label><input type="checkbox" checked /> Green</label><br>
-      <label><input type="checkbox" checked /> Black</label>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Blue</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Brown</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>White</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Green</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>Black</label>
 
       <h4>Size</h4>
-      <label><input type="checkbox" checked /> S</label><br>
-      <label><input type="checkbox" checked /> M</label><br>
-      <label><input type="checkbox" checked /> L</label>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>S</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>M</label><br>
+      <label class="custom-checkbox"><input type="checkbox" checked><span class="checkmark"></span>L</label>
     </div>
 
     <div class="content">
       <div class="search-sort">
-        <div></div>
         <div class="sort-buttons">
           <button>New</button>
           <button>Price ascending</button>
           <button>Price descending</button>
-          <button>Rating</button>
         </div>
       </div>
 
       <div class="products" id="product-grid">
-        <!-- Initial Products -->
-        <div class="product"><img src="images/whiteshirt.webp"><p>White T-Shirt<br>€0</p></div>
-        <div class="product"><img src="images/greenshirt.webp"><p>Green T-Shirt<br>€0</p></div>
-        <div class="product"><img src="images/purplesweat.webp"><p>Purple Sweater<br>€0</p></div>
-        <div class="product"><img src="images/leatherjacket.jpg"><p>Leather Jacket<br>€0</p></div>
-        <div class="product"><img src="images/1.webp"><p>Blue Jeans<br>€0</p></div>
-        <div class="product"><img src="images/whiteshoes.webp"><p>White Shoes<br>€0</p></div>
-        <div class="product"><img src="images/blackboots.webp"><p>Black Boots<br>€0</p></div>
-        <div class="product"><img src="images/beanie.webp"><p>Red Hat<br>€0</p></div>
+        <a href="singleitem.html?product=whiteshirt" class="product"><img src="images/whiteshirt.webp"><p>White T-Shirt<br>€0</p></a>
+        <a href="singleitem.html?product=greenshirt" class="product"><img src="images/greenshirt.webp"><p>Green T-Shirt<br>€0</p></a>
+        <a href="singleitem.html?product=purplesweat" class="product"><img src="images/purplesweat.webp"><p>Purple Sweater<br>€0</p></a>
+        <a href="singleitem.html?product=leatherjacket" class="product"><img src="images/leatherjacket.jpg"><p>Leather Jacket<br>€0</p></a>
+        <a href="singleitem.html?product=bluejeans" class="product"><img src="images/1.webp"><p>Blue Jeans<br>€0</p></a>
+        <a href="singleitem.html?product=whiteshoes" class="product"><img src="images/whiteshoes.webp"><p>White Shoes<br>€0</p></a>
+        <a href="singleitem.html?product=blackboots" class="product"><img src="images/blackboots.webp"><p>Black Boots<br>€0</p></a> 
+        <a href="singleitem.html?product=redhat" class="product"><img src="images/beanie.webp"><p>Red Hat<br>€0</p></a>
       </div>
 
       <div class="load-more">
@@ -248,12 +311,17 @@
       </div>
     </div>
   </div>
+
   <div class="footer">
-        <p>Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
-        <p>Aura Attire</p>
+    <div class="social-icons">
+      <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
     </div>
-  
-  <script>
+    <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
+  </div>
+
+  <script> //doplnenie dalsich projektov, docasne riesenie
     document.getElementById("loadMore").onclick = function () {
       const grid = document.getElementById("product-grid");
       for (let i = 0; i < 8; i++) {
@@ -264,8 +332,6 @@
       }
     };
   </script>
-  
-
 
 </body>
 </html>

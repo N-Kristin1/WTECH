@@ -22,7 +22,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 70px;
             width: auto;
             filter: brightness(1.1);
         }
@@ -39,6 +39,8 @@
             filter: brightness(1.1);
             cursor: pointer;
         }
+        
+        
 
         .search-container {
             position: relative;
@@ -50,7 +52,7 @@
             position: absolute;
             right: 30px;
             background-color: #D6FFF5;
-            border: 1px solid #1D1D1B;
+            border: 1px solid #2C2C2C;
             padding: 8px;
             border-radius: 5px;
             width: 0;
@@ -79,26 +81,27 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: white;
-            background-color: #1D1D1B;
+            color: #D6FFF5;
+            background-color: #2C2C2C;
         }
 
         .step.active {
             background-color: white;
-            color: #1D1D1B;
+            color: #2C2C2C;
         }
 
         .step-line {
             width: 50px;
             height: 2px;
-            background-color: #1D1D1B;
+            background-color: #2C2C2C;
         }
 
         .order-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: white;
+            margin-bottom: 40px;
+            background-color: #2C2C2C;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -109,13 +112,13 @@
         }
 
         .thank-you h1 {
-            color: #1D1D1B;
+            color: #D6FFF5;
             font-size: 2em;
             margin-bottom: 10px;
         }
 
         .thank-you p {
-            color: #666;
+            color: #D6FFF5;
             font-size: 1.2em;
         }
 
@@ -124,7 +127,7 @@
         }
 
         .section-title {
-            color: #1D1D1B;
+            color: #D6FFF5;
             font-size: 1.5em;
             margin-bottom: 20px;
             padding-bottom: 10px;
@@ -138,13 +141,13 @@
         }
 
         .info-section {
-            background-color: #f9f9f9;
+            background-color: white;
             padding: 20px;
             border-radius: 5px;
         }
 
         .info-section h3 {
-            color: #1D1D1B;
+            color: #2C2C2C;
             margin-bottom: 15px;
         }
 
@@ -158,6 +161,7 @@
             margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid #eee;
+            color: #D6FFF5;
         }
 
         .signature img {
@@ -183,6 +187,38 @@
                 width: 30px;
             }
         }
+        
+        .footer {
+            background-color: #A3BDA5;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons img:hover {
+            transform: scale(1.2);
+        }
+
+        .footer-text {
+            max-width: 100%;
+            word-wrap: break-word;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -207,12 +243,12 @@
                 }
             });
 
-            // Get payment and delivery methods from URL parameters
+            // ziskanie parametrov z inych sablon
             const urlParams = new URLSearchParams(window.location.search);
             const paymentMethod = urlParams.get('payment');
             const deliveryMethod = urlParams.get('delivery');
 
-            // Show appropriate payment information
+            //info o platbe
             const creditInfo = document.getElementById('credit-payment-info');
             const cashInfo = document.getElementById('cash-payment-info');
             const bankInfo = document.getElementById('bank-payment-info');
@@ -229,7 +265,7 @@
                 creditInfo.style.display = 'block';
             }
 
-            // Show appropriate delivery information
+            //info o doruceni
             const homeDeliveryInfo = document.getElementById('home-delivery-info');
             const zboxDeliveryInfo = document.getElementById('zbox-delivery-info');
 
@@ -330,8 +366,17 @@
 
         <div class="signature">
             <p>Sincerely yours,</p>
-            <img src="images/logo.png" alt="Aura Attire">
+            <img src="images/logo.png" alt="Aura Attire"> 
         </div>
+    </div>
+    
+    <div class="footer">
+        <div class="social-icons">
+            <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
+        </div>
+        <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
     </div>
 </body>
 </html>

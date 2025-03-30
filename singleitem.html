@@ -233,7 +233,6 @@
       word-wrap: break-word;
     }
 
-    /* ===== Responsive Styles ===== */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -298,11 +297,11 @@
 </head>
 <body>
   <header>
-    <div class="logo"><img src="images/blacklogo.png" alt="Aura Attire Logo"></div>
+    <div class="logo"><a href = "Main_page.html"><img src="images/blacklogo.png" alt="Aura Attire Logo"></a></div>
     <div class="icons">
       <input type="text" placeholder="Search..." />
-      <img src="images/cart.png" alt="cart">
-      <img src="images/profile.png" alt="profile">
+      <a href = "shop_cart.html"><img src="images/cart.png" alt="cart"></a>
+      <a href = "login_reg.html"><img src="images/profile.png" alt="profile"></a>
     </div>
   </header>
 
@@ -339,18 +338,29 @@
       <div class="sizes">
         <label>Size</label>
         <select>
+          <option>46</option>
+          <option>45</option>
+          <option>44</option>
+          <option>43</option>
           <option>42</option>
+          <option>41</option>
+          <option>40</option>
+          <option>39</option>
+          <option>38</option>
+          <option>37</option>
         </select>
       </div>
+      
       <div class="quantity">
-        <button>-</button>
-        <span>1</span>
-        <button>+</button>
-      </div>
+      <button onclick="changeQty(-1)">-</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button> </div>
+      
       <div class="actions">
-        <button>Add To Cart</button>
-        <button>♡</button>
+      <button onclick="addToCart()">Add To Cart</button>
+      <button>♡</button>
       </div>
+      
     </div>
   </div>
 
@@ -393,7 +403,7 @@
     </div>
     <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
   </div>
-
+  
   <script>
     const params = new URLSearchParams(window.location.search);
     const product = params.get("product");

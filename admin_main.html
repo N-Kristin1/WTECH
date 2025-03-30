@@ -22,7 +22,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 70px;
             width: auto;
             filter: brightness(1.1);
         }
@@ -58,12 +58,12 @@
 
         .admin-title {
             font-size: 24px;
-            color: #1D1D1B;
+            color: #2C2C2C;
             margin: 0;
         }
 
         .add-product-btn {
-            background-color: #1D1D1B;
+            background-color: #2C2C2C;
             color: #D6FFF5;
             padding: 10px 20px;
             border: none;
@@ -109,7 +109,7 @@
 
         .product-name {
             font-size: 18px;
-            color: #1D1D1B;
+            color: #2C2C2C;
             margin: 0;
         }
 
@@ -202,7 +202,7 @@
 
         .form-group label {
             font-weight: bold;
-            color: #1D1D1B;
+            color: #2C2C2C;
         }
 
         .form-group input, .form-group textarea {
@@ -257,6 +257,38 @@
                 max-height: none;
                 overflow-y: visible;
             }
+        }
+        
+        .footer {
+            background-color: #A3BDA5;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons img:hover {
+            transform: scale(1.2);
+        }
+
+        .footer-text {
+            max-width: 100%;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -498,88 +530,89 @@
             </form>
         </div>
     </div>
+    
+    <div class="footer">
+        <div class="social-icons">
+            <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
+        </div>
+        <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
+    </div>
 
     <script>
-        // Function to open popup with product data
         function openEditPopup(productCard) {
             const popup = document.getElementById('editPopup');
             const form = document.getElementById('editForm');
             
-            // Get product data from the card
+            //ziskanie hodnot
             const name = productCard.querySelector('.product-name').textContent;
             const price = productCard.querySelector('.product-price').textContent.replace('€', '');
             const image = productCard.querySelector('.product-image').src;
             const stock = productCard.dataset.stock || '0';
             const color = productCard.dataset.color || '';
             
-            // Fill the form with current values
+            //vyplnenie predlohy s hodnotami
             document.getElementById('productName').value = name;
             document.getElementById('productPrice').value = price;
             document.getElementById('productImage').value = image;
             document.getElementById('productStock').value = stock;
             document.getElementById('productColor').value = color;
             
-            // Show popup
             popup.style.display = 'block';
             
-            // Store reference to the product card being edited
             form.dataset.productCard = Array.from(document.querySelectorAll('.product-card')).indexOf(productCard);
         }
 
-        // Function to close edit popup
         function closePopup() {
             document.getElementById('editPopup').style.display = 'none';
         }
 
-        // Function to close add popup
         function closeAddPopup() {
             document.getElementById('addPopup').style.display = 'none';
         }
 
-        // Function to open add product popup
         function openAddPopup() {
             document.getElementById('addPopup').style.display = 'block';
         }
 
-        // Handle edit form submission
+        //kontrola upravy
         document.getElementById('editForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
+            //hodnoty
             const name = document.getElementById('productName').value;
             const price = document.getElementById('productPrice').value;
             const image = document.getElementById('productImage').value;
             const stock = document.getElementById('productStock').value;
             const color = document.getElementById('productColor').value;
             
-            // Get the product card being edited
             const productCards = document.querySelectorAll('.product-card');
             const cardIndex = parseInt(this.dataset.productCard);
             const productCard = productCards[cardIndex];
             
-            // Update the product card with new values
+            //upravenie a pridanie hodnot
             productCard.querySelector('.product-name').textContent = name;
             productCard.querySelector('.product-price').textContent = `€${price}`;
             productCard.querySelector('.product-image').src = image;
             productCard.dataset.stock = stock;
             productCard.dataset.color = color;
             
-            // Close popup
             closePopup();
         });
 
-        // Handle add form submission
+        //"kontrola" pridavania produktu
         document.getElementById('addForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
+            //hodnoty
             const name = document.getElementById('newProductName').value;
             const price = document.getElementById('newProductPrice').value;
             const stock = document.getElementById('newProductStock').value;
             const color = document.getElementById('newProductColor').value;
             const image = document.getElementById('newProductImage').value || 'images/whiteshirt.webp';
             
-            // Create new product card
+            //tvorba noveho produktu
             const productList = document.querySelector('.product-list');
             const newCard = document.createElement('div');
             newCard.className = 'product-card';
@@ -599,10 +632,10 @@
                 </div>
             `;
             
-            // Add new card to the list
+            //novy "child" do zoznamu
             productList.appendChild(newCard);
+
             
-            // Add event listeners to new buttons
             const editBtn = newCard.querySelector('.edit-btn');
             editBtn.addEventListener('click', function() {
                 openEditPopup(newCard);
@@ -613,12 +646,12 @@
                 newCard.remove();
             });
             
-            // Reset form and close popup
+            //reset pop-upu
             this.reset();
             closeAddPopup();
         });
 
-        // Add click event listeners to edit buttons
+        //upravenie produktu
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const productCard = this.closest('.product-card');
@@ -626,10 +659,10 @@
             });
         });
 
-        // Add click event listener to Add New Product button
+        //pridanie produktu
         document.querySelector('.add-product-btn').addEventListener('click', openAddPopup);
 
-        // Close popups when clicking outside
+        //zatvorit popups
         window.addEventListener('click', function(e) {
             const editPopup = document.getElementById('editPopup');
             const addPopup = document.getElementById('addPopup');
