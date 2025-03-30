@@ -193,7 +193,27 @@
       <a href="#"><img src="images/youtube.png" alt="YouTube"></a>
     </div>
     <p class="footer-text">Kontakt | Obchodné podmienky | Platba | Doprava | Reklamácia | Predajne</p>
+    <p class="footer-text" style="font-size: 12px; color: #666; margin-top: 10px;">
+        [Development Only] Admin Login: admin@auraattire.com / admin123
+    </p>
   </div>
+
+  <script>
+    document.querySelector('.login-container form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // Check for admin credentials
+        if (email === 'admin@auraattire.com' && password === 'admin123') {
+            window.location.href = 'admin_main.html';
+        } else {
+            // Regular user login (in real app, this would be handled server-side)
+            window.location.href = 'Main_page.html';
+        }
+    });
+  </script>
 
 </body>
 </html>

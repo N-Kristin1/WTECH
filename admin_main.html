@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Aura Attire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #C3D8C5;
+        }
+
+        .header {
+            background-color: #6B8F71;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-title {
+            font-size: 24px;
+            color: #1D1D1B;
+            margin: 0;
+        }
+
+        .add-product-btn {
+            background-color: #1D1D1B;
+            color: #D6FFF5;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-product-btn:hover {
+            background-color: #333;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            color: #1D1D1B;
+            margin: 0;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: #666;
+            margin: 0;
+        }
+
+        .product-stock {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .edit-btn {
+            background-color: #6B8F71;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Popup styles */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: relative;
+            background-color: white;
+            margin: 50px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-popup {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #1D1D1B;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .save-btn {
+            background-color: #6B8F71;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .popup-content {
+                margin: 20px auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="Main_page.html" class="logo">
+            <img src="images/logo.png" alt="Aura Attire Logo">
+        </a>
+        <div class="header-icons">
+            <div class="header-icon">
+                <a href="login_reg.html"><img src="images/profile.png" alt="Profile"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">Product Management</h1>
+            <button class="add-product-btn">
+                <span style="font-size: 24px; font-weight: bold;">+</span>
+                Add New Product
+            </button>
+        </div>
+
+        <div class="product-list">
+            <!-- Product Card 1 -->
+            <div class="product-card">
+                <img src="images/whiteshirt.webp" alt="White T-Shirt" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Classic White T-Shirt</h3>
+                    <p class="product-price">€29.99</p>
+                    <p class="product-stock">In Stock: 10</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="product-card">
+                <img src="images/jeans.webp" alt="Denim Jeans" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Slim Fit Denim Jeans</h3>
+                    <p class="product-price">€79.99</p>
+                    <p class="product-stock">In Stock: 5</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="product-card">
+                <img src="images/leatherjacket.jpg" alt="Leather Jacket" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Classic Leather Jacket</h3>
+                    <p class="product-price">€199.99</p>
+                    <p class="product-stock">In Stock: 2</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 4 -->
+            <div class="product-card">
+                <img src="images/whiteshoes.avif" alt="White Sneakers" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">White Canvas Sneakers</h3>
+                    <p class="product-price">€89.99</p>
+                    <p class="product-stock">In Stock: 8</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 5 -->
+            <div class="product-card">
+                <img src="images/purplesweat.webp" alt="Purple Sweatshirt" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Purple Hooded Sweatshirt</h3>
+                    <p class="product-price">€59.99</p>
+                    <p class="product-stock">In Stock: 15</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 6 -->
+            <div class="product-card">
+                <img src="images/greenshirt.webp" alt="Green T-Shirt" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Green Cotton T-Shirt</h3>
+                    <p class="product-price">€34.99</p>
+                    <p class="product-stock">In Stock: 20</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 7 -->
+            <div class="product-card">
+                <img src="images/blackboots.webp" alt="Black Boots" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Black Leather Boots</h3>
+                    <p class="product-price">€149.99</p>
+                    <p class="product-stock">In Stock: 3</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+
+            <!-- Product Card 8 -->
+            <div class="product-card">
+                <img src="images/beanie.webp" alt="Beanie Hat" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Wool Beanie Hat</h3>
+                    <p class="product-price">€24.99</p>
+                    <p class="product-stock">In Stock: 10</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for editing product -->
+    <div class="popup-overlay" id="editPopup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Edit Product</h2>
+            <form class="edit-form" id="editForm">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price (€)</label>
+                    <input type="number" id="productPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="productStock">Stock Quantity</label>
+                    <input type="number" id="productStock" min="0" max="999" step="1" required>
+                    <small style="color: #666; font-size: 12px;">Enter quantity between 0 and 999</small>
+                </div>
+                <div class="form-group">
+                    <label for="productColor">Color</label>
+                    <select id="productColor" required>
+                        <option value="">Select a color</option>
+                        <option value="white">White</option>
+                        <option value="black">Black</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="purple">Purple</option>
+                        <option value="pink">Pink</option>
+                        <option value="orange">Orange</option>
+                        <option value="brown">Brown</option>
+                        <option value="grey">Grey</option>
+                        <option value="navy">Navy</option>
+                        <option value="beige">Beige</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image URL</label>
+                    <input type="text" id="productImage" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription"></textarea>
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup for adding new product -->
+    <div class="popup-overlay" id="addPopup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeAddPopup()">&times;</span>
+            <h2>Add New Product</h2>
+            <form class="edit-form" id="addForm">
+                <div class="form-group">
+                    <label for="newProductName">Product Name</label>
+                    <input type="text" id="newProductName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductPrice">Price (€)</label>
+                    <input type="number" id="newProductPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductStock">Stock Quantity</label>
+                    <input type="number" id="newProductStock" min="0" max="999" step="1" required>
+                    <small style="color: #666; font-size: 12px;">Enter quantity between 0 and 999</small>
+                </div>
+                <div class="form-group">
+                    <label for="newProductColor">Color</label>
+                    <select id="newProductColor" required>
+                        <option value="">Select a color</option>
+                        <option value="white">White</option>
+                        <option value="black">Black</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="purple">Purple</option>
+                        <option value="pink">Pink</option>
+                        <option value="orange">Orange</option>
+                        <option value="brown">Brown</option>
+                        <option value="grey">Grey</option>
+                        <option value="navy">Navy</option>
+                        <option value="beige">Beige</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newProductImage">Image URL (Optional)</label>
+                    <input type="text" id="newProductImage">
+                    <small style="color: #666; font-size: 12px;">If no image is provided, a default image will be used.</small>
+                </div>
+                <div class="form-group">
+                    <label for="newProductDescription">Description</label>
+                    <textarea id="newProductDescription"></textarea>
+                </div>
+                <button type="submit" class="save-btn">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to open popup with product data
+        function openEditPopup(productCard) {
+            const popup = document.getElementById('editPopup');
+            const form = document.getElementById('editForm');
+            
+            // Get product data from the card
+            const name = productCard.querySelector('.product-name').textContent;
+            const price = productCard.querySelector('.product-price').textContent.replace('€', '');
+            const image = productCard.querySelector('.product-image').src;
+            const stock = productCard.dataset.stock || '0';
+            const color = productCard.dataset.color || '';
+            
+            // Fill the form with current values
+            document.getElementById('productName').value = name;
+            document.getElementById('productPrice').value = price;
+            document.getElementById('productImage').value = image;
+            document.getElementById('productStock').value = stock;
+            document.getElementById('productColor').value = color;
+            
+            // Show popup
+            popup.style.display = 'block';
+            
+            // Store reference to the product card being edited
+            form.dataset.productCard = Array.from(document.querySelectorAll('.product-card')).indexOf(productCard);
+        }
+
+        // Function to close edit popup
+        function closePopup() {
+            document.getElementById('editPopup').style.display = 'none';
+        }
+
+        // Function to close add popup
+        function closeAddPopup() {
+            document.getElementById('addPopup').style.display = 'none';
+        }
+
+        // Function to open add product popup
+        function openAddPopup() {
+            document.getElementById('addPopup').style.display = 'block';
+        }
+
+        // Handle edit form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const image = document.getElementById('productImage').value;
+            const stock = document.getElementById('productStock').value;
+            const color = document.getElementById('productColor').value;
+            
+            // Get the product card being edited
+            const productCards = document.querySelectorAll('.product-card');
+            const cardIndex = parseInt(this.dataset.productCard);
+            const productCard = productCards[cardIndex];
+            
+            // Update the product card with new values
+            productCard.querySelector('.product-name').textContent = name;
+            productCard.querySelector('.product-price').textContent = `€${price}`;
+            productCard.querySelector('.product-image').src = image;
+            productCard.dataset.stock = stock;
+            productCard.dataset.color = color;
+            
+            // Close popup
+            closePopup();
+        });
+
+        // Handle add form submission
+        document.getElementById('addForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('newProductName').value;
+            const price = document.getElementById('newProductPrice').value;
+            const stock = document.getElementById('newProductStock').value;
+            const color = document.getElementById('newProductColor').value;
+            const image = document.getElementById('newProductImage').value || 'images/whiteshirt.webp';
+            
+            // Create new product card
+            const productList = document.querySelector('.product-list');
+            const newCard = document.createElement('div');
+            newCard.className = 'product-card';
+            newCard.dataset.stock = stock;
+            newCard.dataset.color = color;
+            newCard.innerHTML = `
+                <img src="${image}" alt="${name}" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">${name}</h3>
+                    <p class="product-price">€${price}</p>
+                    <p class="product-stock">In Stock: ${stock}</p>
+                    <p class="product-color">Color: ${color}</p>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            `;
+            
+            // Add new card to the list
+            productList.appendChild(newCard);
+            
+            // Add event listeners to new buttons
+            const editBtn = newCard.querySelector('.edit-btn');
+            editBtn.addEventListener('click', function() {
+                openEditPopup(newCard);
+            });
+            
+            const deleteBtn = newCard.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', function() {
+                newCard.remove();
+            });
+            
+            // Reset form and close popup
+            this.reset();
+            closeAddPopup();
+        });
+
+        // Add click event listeners to edit buttons
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                openEditPopup(productCard);
+            });
+        });
+
+        // Add click event listener to Add New Product button
+        document.querySelector('.add-product-btn').addEventListener('click', openAddPopup);
+
+        // Close popups when clicking outside
+        window.addEventListener('click', function(e) {
+            const editPopup = document.getElementById('editPopup');
+            const addPopup = document.getElementById('addPopup');
+            if (e.target === editPopup) {
+                closePopup();
+            }
+            if (e.target === addPopup) {
+                closeAddPopup();
+            }
+        });
+    </script>
+</body>
+</html>
