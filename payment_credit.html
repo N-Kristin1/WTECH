@@ -263,6 +263,10 @@
         }
       });
     });
+
+    function validateAndContinue() {
+      window.location.href = 'order_info.html?payment=credit&delivery=home';
+    }
   </script>
 </head>
 <body>
@@ -319,7 +323,7 @@
             <label for="save-card">Save this credit card</label>
           </div>
 
-          <button class="continue-btn">Continue</button>
+          <button type="button" class="continue-btn" onclick="validateAndContinue()">Continue</button>
         </div>
       </div>
     </div>

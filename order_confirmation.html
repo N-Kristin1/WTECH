@@ -245,11 +245,37 @@
       goToPaymentBtn.addEventListener('click', function (e) {
         e.preventDefault();
         const creditRadio = document.querySelector('input[value="credit"]');
+        const cashRadio = document.querySelector('input[value="cash"]');
+        const bankRadio = document.querySelector('input[value="bank"]');
+        const homeDeliveryRadio = document.querySelector('input[value="home"]');
+        const zboxDeliveryRadio = document.querySelector('input[value="zbox"]');
+
+        let paymentMethod = '';
+        let deliveryMethod = '';
+
         if (creditRadio && creditRadio.checked) {
           window.location.href = 'payment_credit.html';
+          return;
+        } else if (cashRadio && cashRadio.checked) {
+          paymentMethod = 'cash';
+        } else if (bankRadio && bankRadio.checked) {
+          paymentMethod = 'bank';
         } else {
-          window.location.href = '#';
+          alert('Prosím vyberte spôsob platby');
+          return;
         }
+
+        if (homeDeliveryRadio && homeDeliveryRadio.checked) {
+          deliveryMethod = 'home';
+        } else if (zboxDeliveryRadio && zboxDeliveryRadio.checked) {
+          deliveryMethod = 'zbox';
+        } else {
+          alert('Prosím vyberte spôsob dopravy');
+          return;
+        }
+
+        // Presmerovanie na order_info.html s parametrami
+        window.location.href = `order_info.html?payment=${paymentMethod}&delivery=${deliveryMethod}`;
       });
     });
   </script>
