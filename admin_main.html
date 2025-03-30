@@ -164,12 +164,14 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .popup-content {
             position: relative;
             background-color: white;
-            margin: 50px auto;
+            margin: 20px auto;
             padding: 20px;
             width: 90%;
             max-width: 500px;
@@ -242,8 +244,18 @@
             }
 
             .popup-content {
-                margin: 20px auto;
+                margin: 10px auto;
                 width: 95%;
+                max-height: none;
+            }
+
+            .popup-overlay {
+                padding: 10px 0;
+            }
+
+            .edit-form {
+                max-height: none;
+                overflow-y: visible;
             }
         }
     </style>
