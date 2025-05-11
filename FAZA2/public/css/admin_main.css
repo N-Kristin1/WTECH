@@ -1,0 +1,114 @@
+/* public/css/admin_main.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #C3D8C5;
+    color: #000000; /* ČIERNY TEXT */
+}
+
+h1, h2 {
+    text-align: center;
+    color: #000000; /* ČIERNY TEXT */
+    margin-top: 20px;
+}
+
+section {
+    background: #ffffff;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(107, 143, 113, 0.2); /* #6B8F71 shadow */
+}
+
+#product-form input {
+    margin: 8px 5px;
+    padding: 10px;
+    width: calc(20% - 12px);
+    border: 1px solid #A3BDA5;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    color: #000000; /* ČIERNY TEXT */
+}
+
+#product-form input:focus {
+    border-color: #6B8F71;
+    outline: none;
+}
+
+#product-form button {
+    padding: 10px 15px;
+    background-color: #A3BDA5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#product-form button:hover {
+    background-color: #6B8F71;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid #A3BDA5;
+    color: #000000; /* ČIERNY TEXT */
+}
+
+th {
+    background-color: #A3BDA5;
+    color: #000000; /* ČIERNY TEXT aj v hlavičke */
+    padding: 12px;
+    text-align: center;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #ffffff;
+}
+
+tr:nth-child(even) td {
+    background-color: #F1F7F2;
+}
+
+button {
+    padding: 6px 12px;
+    background-color: #A3BDA5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #6B8F71;
+}
+
+button:nth-child(2) {
+    background-color: #6B8F71;
+}
+
+button:nth-child(2):hover {
+    background-color: #4a6d52;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #A3BDA5;
+    border-radius: 4px;
+    max-height: 60px;
+    max-width: 60px;
+    object-fit: cover;
+}
